@@ -1,3 +1,7 @@
+# Blockchain Ansible Playbooks
+
+Infrastructure automation for Hey's various Blockchain nodes (both Ethereum mainchain and Loom sidechain).
+
 ## Loom Testnet Non-validator node
 
 1. Set up AWS credentials and save them under the `hey` profile name in `~/.aws/credentials`
