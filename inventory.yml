@@ -1,0 +1,44 @@
+---
+all:
+  vars:
+    disk_size: 10
+    loom_build: latest
+    ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+
+    aws_ami_id: ami-0233214e13e500f77
+    aws_instance_type: t2.nano
+    aws_region: eu-central-1
+    aws_vpc_id: vpc-01f9e3e0a0880c540
+    aws_vpc_subnet_id: subnet-0e4fb5e01d7839132
+    aws_vpc_subnet_cidr_ip: 10.0.0.0/24
+    aws_keypair_name: loom_non_validator
+    aws_user_data: |
+      #!/bin/bash
+      sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
+  children:
+    loom:
+      hosts:
+        loom-0:
+          ansible_hostname: loom-non-validator
+          ansible_host:
+          private_ip:
+          aws_subnet: subnet-0e4fb5e01d7839132
+          syslog_identifier: loom-non-validator
+        # loom-1:
+        #   ansible_hostname: loom-1
+        #   ansible_host:
+        #   private_ip:
+        #   aws_subnet: subnet-0e4fb5e01d7839132
+        #   syslog_identifier: loom-1
+        # loom-2:
+        #   ansible_hostname: loom-2
+        #   ansible_host:
+        #   private_ip:
+        #   aws_subnet: subnet-0e4fb5e01d7839132
+        #   syslog_identifier: loom-2
+        # loom-3:
+        #   ansible_hostname: loom-3
+        #   ansible_host:
+        #   private_ip:
+        #   aws_subnet: subnet-0e4fb5e01d7839132
+        #   syslog_identifier: loom-3

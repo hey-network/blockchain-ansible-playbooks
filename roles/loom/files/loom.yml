@@ -1,0 +1,10 @@
+ChainID: "dposv2"
+QueryServerHost: "tcp://0.0.0.0:9999"
+RPCListenAddress: "tcp://0.0.0.0:46657"
+TendermintLogLevel: "debug"
+LogStateDB: true
+LogEthDBBatch: true
+RegistryVersion: 2
+ReceiptsVersion: 2
+CreateEmptyBlocks: false
+DPOSVersion: 2

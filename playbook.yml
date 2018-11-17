@@ -1,0 +1,20 @@
+---
+- name: Local
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+  - name: Retrieve the loom binary
+    command: curl -sL -o /tmp/loom-{{ loom_build }} https://private.delegatecall.com/loom/linux/{{ loom_build }}/loom creates=/tmp/loom-{{ loom_build }}
+
+- name: Provision non-validator loom node
+  hosts: all
+  gather_facts: yes
+  connection: ssh
+
+  vars:
+    HOST_COUNT: "{{ ansible_play_hosts | length | int }}"
+
+  roles:
+    - loom

@@ -1,0 +1,66 @@
+---
+- name: Create instance(s)
+  hosts: localhost
+  connection: local
+  gather_facts: no
+
+  vars:
+
+  tasks:
+  - name: AWS -- Create key pair
+    local_action:
+      module: ec2_key
+      name: "{{ aws_keypair_name }}"
+      region: "{{ aws_region }}"
+    register: ec2_key_result
+
+  - name: AWS -- Save key pair
+    copy: content="{{ ec2_key_result.key.private_key }}" dest="~/.ssh/{{ aws_keypair_name }}.pem" mode=0600
+    when: ec2_key_result.changed
+
+  - name: AWS -- Create security group
+    local_action:
+      module: ec2_group
+      name: loom_sg
+      description: Security group for loom instances
+      vpc_id: "{{ aws_vpc_id }}"
+      region: "{{ aws_region }}"
+      rules:
+        - proto: tcp
+          ports:
+            - 46656-46658
+            - 9999
+          cidr_ip: "{{ aws_vpc_subnet_cidr_ip }}"
+        - proto: tcp
+          from_port: 22
+          to_port: 22
+          cidr_ip: 0.0.0.0/0
+        - proto: icmp
+          from_port: 8
+          to_port:  -1
+          cidr_ip: 0.0.0.0/0
+
+  - name: AWS -- Launch EC2 instances
+    local_action:
+      module: ec2
+      id: "{{ hostvars[item]['ansible_hostname'] }}"
+      key_name: "{{ aws_keypair_name }}"
+      group: loom_sg
+      instance_type: "{{ aws_instance_type }}"
+      image: "{{ aws_ami_id }}"
+      wait: yes
+      wait_timeout: 500
+      instance_tags:
+          Name: "{{ hostvars[item]['ansible_hostname'] }}"
+      region: "{{ aws_region }}"
+      vpc_subnet_id: "{{ hostvars[item]['aws_subnet'] }}"
+      assign_public_ip: yes
+      monitoring: yes
+      user_data: "{{ aws_user_data }}"
+      volumes:
+        - device_name: /dev/sda1
+          device_type: gp2
+          volume_size: "{{ disk_size }}"
+          delete_on_termination: true
+      state: present
+    with_items: "{{ groups['loom'] }}"

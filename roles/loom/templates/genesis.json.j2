@@ -1,0 +1,72 @@
+{
+  "contracts": [
+    {
+      "vm": "plugin",
+      "format": "plugin",
+      "name": "coin",
+      "location": "coin:1.0.0",
+      "init": {
+        "accounts": [
+          {
+            "owner": {
+              "chainId": "dposv2",
+              "local": "JC+p7V+PXHYBtUy2MOYOKp7YSbY="
+            },
+            "balance": "100"
+          },
+          {
+            "owner": {
+              "chainId": "dposv2",
+              "local": "iOKkG0ByOm40/WmMhdvmjHkHfsc="
+            },
+            "balance": "100"
+          },
+          {
+            "owner": {
+              "chainId": "dposv2",
+              "local": "Q7mRqhA3jRrBSP5QXrJSYGMwLVQ="
+            },
+            "balance": "100"
+          },
+          {
+            "owner": {
+              "chainId": "dposv2",
+              "local": "yCeaEY/UqwHcJly/BxUH52HCNvI="
+            },
+            "balance": "100"
+          }
+        ]
+      }
+    },
+    {
+      "vm": "plugin",
+      "format": "plugin",
+      "name": "dposV2",
+      "location": "dposV2:2.0.0",
+      "init": {
+        "params": {
+          "validatorCount": "21",
+          "electionCycleLength": "604800"
+        },
+        "validators": [
+          {
+            "power": "10",
+            "pubKey": "yC1ZAMPKecOtCfBqk0Z0Jh2itcpBZueOehnCtyRb0O8="
+          },
+          {
+            "power": "10",
+            "pubKey": "NsOUCD4ZiyobzA06xZkverBR8p57Fl8qY0410ZKY0ZQ="
+          },
+          {
+            "power": "10",
+            "pubKey": "lYGdZyuzLk3VOZ7KnpLMKE/EPGIOSCU8+N7G8biWPok="
+          },
+          {
+            "power": "10",
+            "pubKey": "k2Uod0/yz5EC8J9b5k0AzSjXOAX1/0DDmxmZp6PXWPI="
+          }
+        ]
+      }
+    }
+  ]
+}
